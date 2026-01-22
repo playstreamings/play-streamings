@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Play Streamings | Venda de Streamings</title>
+  <meta name="description" content="Compre streamings com entrega rápida. Pagamento via Pix. Suporte pelo WhatsApp." />
+  <style>
+    :root{
+      --bg:#0b0f17; --card:#111827; --muted:#94a3b8; --txt:#e5e7eb;
+      --pri:#22c55e; --sec:#38bdf8; --bd:#243045;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; background:linear-gradient(180deg,#050812, #0b0f17 30%); color:var(--txt)}
+    a{color:inherit}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px; position:sticky; top:0; backdrop-filter: blur(8px); background:rgba(11,15,23,.75); border-bottom:1px solid rgba(255,255,255,.06); padding:14px 24px; z-index:9}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800; letter-spacing:.4px}
+    .logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--sec),var(--pri)); box-shadow:0 10px 25px rgba(34,197,94,.25)}
+    .nav a{opacity:.9;text-decoration:none}
+    .menu{display:flex;gap:14px; flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.08); background:rgba(17,24,39,.7); text-decoration:none}
+    .btn.pri{background:linear-gradient(135deg,var(--pri),#16a34a); border:0; color:#06210f; font-weight:800}
+    .btn.ghost{background:transparent}
+    .hero{padding:46px 0 20px; display:grid; grid-template-columns:1.3fr .7fr; gap:22px; align-items:center}
+    .h1{font-size:42px;line-height:1.05;margin:0 0 12px;font-weight:900}
+    .sub{color:var(--muted); font-size:16px; line-height:1.55; margin:0 0 18px}
+    .badges{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 18px}
+    .badge{padding:8px 10px;border:1px solid rgba(255,255,255,.08);border-radius:999px;background:rgba(17,24,39,.6); color:var(--muted); font-size:12px}
+    .panel{background:rgba(17,24,39,.75); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:18px}
+    .grid{display:grid; gap:14px}
+    .cards{display:grid; grid-template-columns:repeat(3, 1fr); gap:14px}
+    .card{background:rgba(17,24,39,.75); border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:18px; position:relative; overflow:hidden}
+    .card h3{margin:0 0 6px}
+    .price{font-size:30px;font-weight:900;margin:10px 0}
+    .muted{color:var(--muted)}
+    ul{margin:10px 0 0; padding-left:18px; color:var(--muted)}
+    li{margin:6px 0}
+    .tag{position:absolute; top:14px; right:14px; font-size:11px; padding:6px 9px; border-radius:999px; background:rgba(56,189,248,.12); border:1px solid rgba(56,189,248,.25); color:#bfe9fb}
+    .tag.hot{background:rgba(34,197,94,.14); border-color:rgba(34,197,94,.28); color:#bff3ce}
+    .section{padding:22px 0}
+    .title{font-size:22px; margin:0 0 8px}
+    .two{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+    label{display:block; font-size:12px; color:var(--muted); margin:10px 0 6px}
+    input,select,textarea{width:100%; padding:12px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.10); background:rgba(2,6,23,.55); color:var(--txt); outline:none}
+    textarea{min-height:90px; resize:vertical}
+    .row{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    .note{font-size:12px;color:var(--muted); margin-top:10px}
+    .footer{border-top:1px solid rgba(255,255,255,.08); padding:18px 0; margin-top:18px; color:var(--muted); font-size:13px}
+    .faq details{border:1px solid rgba(255,255,255,.08); background:rgba(17,24,39,.6); border-radius:14px; padding:12px 14px}
+    .faq summary{cursor:pointer; font-weight:700}
+    .whats{position:fixed; right:18px; bottom:18px; z-index:99}
+    .whats a{background:linear-gradient(135deg,var(--pri),#16a34a); color:#05210f; font-weight:900; border-radius:999px; padding:14px 16px; text-decoration:none; box-shadow:0 18px 35px rgba(34,197,94,.25); display:inline-flex; gap:10px; align-items:center}
+    .small{font-size:12px}
+    @media(max-width:920px){
+      .hero{grid-template-columns:1fr}
+      .cards{grid-template-columns:1fr}
+      .two{grid-template-columns:1fr}
+      .row{grid-template-columns:1fr}
+      .h1{font-size:34px}
+      .nav{position:relative}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CONFIG: troque aqui -->
+  <script>
+    const CONFIG = {
+      lojaNome: "Play Streamings",
+      whatsapp: "5591982914404", // seu WhatsApp com DDI+DDD (Brasil = 55)
+      pixChave: "91982914404",
+      pixNome: "Play Streamings",
+      instagram: "drakez.music" // opcional
+    };
+
+    const PRODUTOS = [
+      {
+        id:"spotify-1m",
+        nome:"Spotify 1 mês",
+        preco:"R$ 10,90",
+        destaque:"Mais vendido",
+        itens:["Entrega rápida","Suporte no WhatsApp","Garantia de ativação"],
+      },
+      {
+        id:"netflix-1m",
+        nome:"Netflix 1 mês",
+        preco:"R$ 15,90",
+        destaque:"Promo",
+        itens:["Entrega rápida","Suporte no WhatsApp","Garantia de ativação"],
+      },
+      {
+        id:"disney-1m",
+        nome:"Disney+ 1 mês",
+        preco:"R$ 13,90",
+        destaque:"Top",
+        itens:["Entrega rápida","Suporte no WhatsApp","Garantia de ativação"],
+      }
+    ];
+  </script>
+
+  <div class="nav">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div id="brandName">Play Streamings</div>
+    </div>
+    <div class="menu">
+      <a class="btn ghost" href="#planos">Planos</a>
+      <a class="btn ghost" href="#como">Como funciona</a>
+      <a class="btn ghost" href="#pedido">Fazer pedido</a>
+      <a class="btn pri" id="btnWhatsTop" href="#">Chamar no WhatsApp</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="hero">
+      <div>
+        <h1 class="h1">Venda de streamings com entrega rápida e suporte no WhatsApp.</h1>
+        <p class="sub" id="heroSub">Escolha um plano, pague via Pix e receba a ativação. Atendimento humano e rápido.</p>
+        <div class="badges">
+          <span class="badge">Pix</span>
+          <span class="badge">Entrega rápida</span>
+          <span class="badge">Suporte WhatsApp</span>
+          <span class="badge">Garantia de ativação</span>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn pri" href="#pedido">Comprar agora</a>
+          <a class="btn" href="#planos">Ver planos</a>
+        </div>
+        <p class="note small">Ao comprar, você concorda com os termos e fornece os dados necessários para ativação.</p>
+      </div>
+
+      <div class="panel grid">
+        <div>
+          <div class="muted small">Pagamento</div>
+          <div style="font-weight:900;font-size:18px;margin-top:4px">Pix</div>
+        </div>
+        <div>
+          <div class="muted small">Chave Pix</div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <code id="pixKey" style="padding:8px 10px;border:1px solid rgba(255,255,255,.12);border-radius:12px;background:rgba(2,6,23,.55)">SUA_CHAVE_PIX_AQUI</code>
+            <button class="btn" id="copyPix" type="button">Copiar</button>
+          </div>
+          <div class="note small" id="pixName">Favorecido: Play Streamings</div>
+        </div>
+        <div>
+          <div class="muted small">Instagram</div>
+          <div style="font-weight:800" id="ig">@drakez.music</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="planos">
+      <h2 class="title">Planos disponíveis</h2>
+      <p class="muted">Escolha o streaming e finalize seu pedido no formulário.</p>
+      <div class="cards" id="cards"></div>
+    </section>
+
+    <section class="section" id="como">
+      <h2 class="title">Como funciona</h2>
+      <div class="two">
+        <div class="panel">
+          <h3 style="margin-top:0">1) Escolha o plano</h3>
+          <p class="muted">Selecione o streaming, período e informe os dados para ativação.</p>
+        </div>
+        <div class="panel">
+          <h3 style="margin-top:0">2) Pague via Pix</h3>
+          <p class="muted">Envie o comprovante no WhatsApp para agilizar.</p>
+        </div>
+        <div class="panel">
+          <h3 style="margin-top:0">3) Entrega</h3>
+          <p class="muted">Você recebe a ativação e instruções. Suporte durante o processo.</p>
+        </div>
+        <div class="panel">
+          <h3 style="margin-top:0">4) Suporte</h3>
+          <p class="muted">Qualquer dúvida, chame no WhatsApp.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pedido">
+      <h2 class="title">Fazer pedido</h2>
+      <div class="two">
+        <form class="panel" id="orderForm">
+          <div class="row">
+            <div>
+              <label>Seu nome</label>
+              <input required name="nome" placeholder="Ex: Wellington" />
+            </div>
+            <div>
+              <label>Seu WhatsApp</label>
+              <input required name="tel" placeholder="Ex: (91) 98291-4404" />
+            </div>
+          </div>
+
+          <label>Escolha o plano</label>
+          <select required name="produto" id="produtoSelect"></select>
+
+          <label>Dados para ativação (email/login/perfil etc.)</label>
+          <textarea required name="dados" placeholder="Ex: Email de acesso, perfil, observações..."></textarea>
+
+          <label>Observações</label>
+          <textarea name="obs" placeholder="Ex: Quero entrega hoje, já paguei, vou enviar comprovante..."></textarea>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px">
+            <button class="btn pri" type="submit">Enviar pedido no WhatsApp</button>
+            <a class="btn" id="btnPix" href="#pix">Ver Pix</a>
+          </div>
+
+          <p class="note">Dica: após pagar, envie o comprovante no WhatsApp para liberar mais rápido.</p>
+        </form>
+
+        <div class="panel faq">
+          <h3 style="margin-top:0">Perguntas frequentes</h3>
+          <div class="grid">
+            <details>
+              <summary>Qual o prazo de entrega?</summary>
+              <p class="muted">Normalmente rápido após confirmação do Pix (varia por plano e horário).</p>
+            </details>
+            <details>
+              <summary>Como envio o comprovante?</summary>
+              <p class="muted">Pelo WhatsApp. O botão “Chamar no WhatsApp” já abre a conversa.</p>
+            </details>
+            <details>
+              <summary>Tem suporte?</summary>
+              <p class="muted">Sim, suporte via WhatsApp para ajudar na ativação.</p>
+            </details>
+            <details>
+              <summary>Posso trocar de plano depois?</summary>
+              <p class="muted">Chame no WhatsApp e combinamos a melhor opção.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      <div><strong id="footerName">Play Streamings</strong> • Atendimento via WhatsApp</div>
+      <div class="small">© <span id="year"></span> • Todos os direitos reservados.</div>
+    </div>
+  </div>
+
+  <div class="whats">
+    <a id="whatsFloat" href="#">
+      <span style="font-size:18px">💬</span>
+      <span>WhatsApp</span>
+    </a>
+  </div>
+
+  <script>
+    // Apply config
+    document.getElementById("brandName").textContent = CONFIG.lojaNome;
+    document.getElementById("footerName").textContent = CONFIG.lojaNome;
+    document.getElementById("pixKey").textContent = CONFIG.pixChave;
+    document.getElementById("pixName").textContent = "Favorecido: " + CONFIG.pixNome;
+    document.getElementById("ig").textContent = CONFIG.instagram ? ("@" + CONFIG.instagram) : "—";
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // WhatsApp links
+    function waLink(text){
+      const base = "https://wa.me/" + CONFIG.whatsapp;
+      return base + "?text=" + encodeURIComponent(text);
+    }
+    const topBtn = document.getElementById("btnWhatsTop");
+    const floatBtn = document.getElementById("whatsFloat");
+    const msgPadrao = `Olá! Vim pelo site ${CONFIG.lojaNome}. Quero comprar um streaming.`;
+    topBtn.href = waLink(msgPadrao);
+    floatBtn.href = waLink(msgPadrao);
+
+    // Render cards + select
+    const cards = document.getElementById("cards");
+    const sel = document.getElementById("produtoSelect");
+
+    function render(){
+      cards.innerHTML = "";
+      sel.innerHTML = '<option value="" disabled selected>Selecione…</option>';
+
+      PRODUTOS.forEach((p, idx) => {
+        const tagClass = (idx===0) ? "tag hot" : "tag";
+        const tagText = p.destaque || "Plano";
+        const li = p.itens.map(x => `<li>${x}</li>`).join("");
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <span class="${tagClass}">${tagText}</span>
+          <h3>${p.nome}</h3>
+          <div class="price">${p.preco}</div>
+          <div class="muted">Inclui:</div>
+          <ul>${li}</ul>
+          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
+            <a class="btn pri" href="#pedido" onclick="document.getElementById('produtoSelect').value='${p.id}'">Quero esse</a>
+            <a class="btn" href="${waLink(`Olá! Quero o plano: ${p.nome} (${p.preco}).`)}">Perguntar no WhatsApp</a>
+          </div>
+        `;
+        cards.appendChild(card);
+
+        const opt = document.createElement("option");
+        opt.value = p.id;
+        opt.textContent = `${p.nome} — ${p.preco}`;
+        sel.appendChild(opt);
+      });
+    }
+    render();
+
+    // Copy pix
+    document.getElementById("copyPix").addEventListener("click", async () => {
+      try{
+        await navigator.clipboard.writeText(CONFIG.pixChave);
+        alert("Chave Pix copiada!");
+      }catch(e){
+        alert("Não consegui copiar. Segure e copie manualmente: " + CONFIG.pixChave);
+      }
+    });
+
+    // Form -> WhatsApp
+    document.getElementById("orderForm").addEventListener("submit", (ev) => {
+      ev.preventDefault();
+      const fd = new FormData(ev.target);
+      const nome = fd.get("nome");
+      const tel = fd.get("tel");
+      const prodId = fd.get("produto");
+      const dados = fd.get("dados");
+      const obs = fd.get("obs") || "-";
+
+      const prod = PRODUTOS.find(x => x.id === prodId);
+      const prodTxt = prod ? `${prod.nome} (${prod.preco})` : prodId;
+
+      const msg =
+`Pedido no site: ${CONFIG.lojaNome}
+Nome: ${nome}
+WhatsApp: ${tel}
+Plano: ${prodTxt}
+
+Dados para ativação:
+${dados}
+
+Obs:
+${obs}
+
+Pix: ${CONFIG.pixChave} (Favorecido: ${CONFIG.pixNome})
+`;
+      window.location.href = waLink(msg);
+    });
+  </script>
+</body>
+</html>
